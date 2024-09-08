@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Resume</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .content-wrapper {
+            min-height: calc(100vh - 100px); /* Adjust according to footer height */
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 90%; /* Ensure container is not too wide on larger screens */
+        }
+        .section-title {
+            border-bottom: 2px solid #D1D5DB; /* Light gray border */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #4A5568; /* Darker gray */
+        }
+        .content-section {
+            background-color: #F7FAFC; /* Very light blue-gray */
+            border: 1px solid #E2E8F0; /* Light blue-gray */
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .editable-content {
+            border: 1px solid #CBD5E0; /* Light gray */
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #FFFFFF; /* White background */
+        }
+        .btn-primary {
+            background-color: #4A90E2; /* Blue color */
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #357ABD; /* Darker blue */
+        }
+        .btn-secondary {
+            background-color: #50C878; /* Mint green color */
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #3D9A66; /* Darker mint green */
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-200 p-6">
+
+<div class="container mx-auto p-4 content-wrapper">
+    <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-700">Editable Resume</h1>
+
+    <!-- Editable Resume Section -->
+    <div id="editable-resume" class="content-section mb-6">
+        <h2 class="text-2xl font-semibold mb-6 section-title">Edit Your Resume</h2>
+
+        <!-- Personal Information Section -->
+        <div id="personal-info" class="mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Personal Information</h3>
+            <div id="personal-info-content" class="editable-content">
+                <label class="block mb-2 text-sm font-medium text-gray-700" for="editableName">Your Name</label>
+                <p contenteditable="true" id="editableName" class="editable-content mb-4"></p>
+                
+                <label class="block mb-2 text-sm font-medium text-gray-700" for="editableEmail">Your Email Address</label>
+                <p contenteditable="true" id="editableEmail" class="editable-content mb-4"></p>
+                
+                <label class="block mb-2 text-sm font-medium text-gray-700" for="editablePhone">Your Phone Number</label>
+                <p contenteditable="true" id="editablePhone" class="editable-content"></p>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div id="education" class="mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Education</h3>
+            <div id="education-content" class="editable-content">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Your Degree</label>
+                <p contenteditable="true" class="editable-content mb-4"></p>
+                
+                <label class="block mb-2 text-sm font-medium text-gray-700">Your University - Year</label>
+                <p contenteditable="true" class="editable-content"></p>
+            </div>
+        </div>
+
+        <!-- Work Experience Section -->
+        <div id="work-experience" class="mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Work Experience</h3>
+            <div id="work-experience-content" class="editable-content">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Your Job Title at Company</label>
+                <p contenteditable="true" class="editable-content mb-4"></p>
+                
+                <label class="block mb-2 text-sm font-medium text-gray-700">Describe your responsibilities and achievements</label>
+                <p contenteditable="true" class="editable-content"></p>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div id="skills" class="mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Skills</h3>
+            <div id="skills-content" class="editable-content">
+                <p contenteditable="true" class="editable-content"></p>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex space-x-4">
+            <button id="generate-resume" class="btn-primary">Generate Resume</button>
+            <button id="download-pdf" class="btn-secondary">Download as PDF</button>
+        </div>
+    </div>
+
+    <!-- Resume Display Section -->
+    <div id="resume" class="content-section hidden">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Generated Resume</h2>
+        <p class="text-md font-medium text-gray-700 mb-2">Name: <span id="displayName" class="font-normal text-gray-600"></span></p>
+        <p class="text-md font-medium text-gray-700 mb-2">Email: <span id="displayEmail" class="font-normal text-gray-600"></span></p>
+        <p class="text-md font-medium text-gray-700 mb-2">Education: <span id="displayEducation" class="font-normal text-gray-600"></span></p>
+        <p class="text-md font-medium text-gray-700 mb-2">Work Experience: <span id="displayWorkExperience" class="font-normal text-gray-600"></span></p>
+        <p class="text-md font-medium text-gray-700">Skills: <span id="displaySkills" class="font-normal text-gray-600"></span></p>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
